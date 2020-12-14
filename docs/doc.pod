@@ -1,11 +1,15 @@
-unit class Astro::Almanac:ver<0.0.1>:auth<cpan:TBROWDER>;
-
-
 =begin pod
 
 =head1 NAME
 
-C<Astro::Almanac> - Provides data on the paths of the Sun, Moon, and planets
+C<Astro::Almanac> - Provides data on the paths of the Sun, Moon, and
+planets
+
+=head1 TEMPORARY DISCLAIMER
+
+C<Astro::Almanac> is a Work in Progress (WIP). Please file an issue if
+there are any features you want added. Bug reports (issues) are always
+welcome.
 
 =head1 SYNOPSIS
 
@@ -27,16 +31,22 @@ $a.generate :$loc, :2021year;
 
 =head1 DESCRIPTION
 
-C<Astro::Almanac> under the covers uses three fine Perl modules thanks
-to the excellent Raku module C<Inline::Perl5>.
+C<Astro::Almanac> provides daily observation data on the Sun, Moon,
+and planets, all output as a JSON file named C<astro-data.json>.
 
-To install the Perl modules execute:
+Under the covers it uses three fine Perl modules thanks to the
+excellent Raku module C<Inline::Perl5>. To install the Perl modules
+execute:
 
 =code
 # cpanm Astro::Montenbruck::RiseSet::RST
 # cpanm Astro::MoonPhase:
 # cpanm Astro::Utils
 
+=head1 See also related modules by the same author:
+
+=item L<C<DateTime::Locations>|https://github.com/tbrowder/DateTime-Location>
+=item L<C<Calendar>|https://github.com/tbrowder/Calendar>
 
 =head1 AUTHOR
 
@@ -44,8 +54,9 @@ Tom Browder <tom.browder@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2020 Tom Browder
+E<0x00a9> 2020 Tom Browder
 
-This library is free software; you may redistribute it or modify it under the Artistic License 2.0.
+This library is free software; you may redistribute it or modify it
+under the Artistic License 2.0.
 
 =end pod
