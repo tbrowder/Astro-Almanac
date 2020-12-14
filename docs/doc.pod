@@ -5,23 +5,40 @@ unit class Astro::Almanac:ver<0.0.1>:auth<cpan:TBROWDER>;
 
 =head1 NAME
 
-Astro::Almanac - blah blah blah
+Astro::Almanac - Provides daily data on the paths of the Sun, Moon, and planets for a specific location on the Earth
 
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
 
 use Astro::Almanac;
+my $loc = DateTime::Location.new: :$name, :$lat, :$lon, :$timezone;
+my $astro = Astro::Almanac.new;
+
+# generate one month of daily information in a single JSON file
+$astro.generate :$loc, :2021year, :1month;
+
+# for the entire year:
+$astro.generate :$loc, :2021year;
 
 =end code
 
 =head1 DESCRIPTION
 
-Astro::Almanac is ...
+C<Astro::Almanac> under the covers uses three fine Perl modules thanks
+to the excellent Raku module C<Inline::Perl5>.
+
+To install the Perl modules execute:
+
+=code
+# cpanm Astro::Montenbruck::RiseSet::RST
+# cpanm Astro::MoonPhase:
+# cpanm Astro::Utils
+
 
 =head1 AUTHOR
 
-Tom Browder <tom.browder@gmail.com>
+Tom Browder <tom.browder@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 

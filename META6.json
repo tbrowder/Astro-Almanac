@@ -6,8 +6,11 @@
   "build-depends": [
   ],
   "depends": [
+    "Text::Utils",
+    "DateTime::Location",
+    "Inline::Perl5"
   ],
-  "description": "blah blah blah",
+  "description": "Provides daily data on the paths of the Sun, Moon, and planets for a specific location on the Earth",
   "license": "Artistic-2.0",
   "name": "Astro::Almanac",
   "perl": "6.d",
@@ -16,7 +19,7 @@
   },
   "resources": [
   ],
-  "source-url": "",
+  "source-url": "https://github.com/tbrowder/Astro-Almanac.git",
   "tags": [
   ],
   "test-depends": [
