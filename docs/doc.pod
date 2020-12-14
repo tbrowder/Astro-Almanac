@@ -5,7 +5,7 @@ unit class Astro::Almanac:ver<0.0.1>:auth<cpan:TBROWDER>;
 
 =head1 NAME
 
-C<Astro::Almanac> - Provides data on the paths of the Sun, Moon, and planetsth
+C<Astro::Almanac> - Provides data on the paths of the Sun, Moon, and planets
 
 =head1 SYNOPSIS
 

@@ -3,7 +3,7 @@
 NAME
 ====
 
-`Astro::Almanac` - Provides data on the paths of the Sun, Moon, and planetsth
+`Astro::Almanac` - Provides data on the paths of the Sun, Moon, and planets
 
 SYNOPSIS
 ========
