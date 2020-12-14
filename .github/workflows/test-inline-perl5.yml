@@ -30,7 +30,7 @@ jobs:
           sudo apt-get install -y libperl-dev libexcel-writer-xlsx-perl libspreadsheet-read-perl cpanminus
           sudo cpanm Spreadsheet::Reader::ExcelXML Spreadsheet::ParseXLSX
           sudo cpanm Astro::Montenbruck::RiseSet::RST
-          sudo cpanm Astro::MoonPhase:
+          sudo cpanm Astro::MoonPhase
           sudo cpanm Astro::Utils
           sudo apt-get install -y libcsv-dev
           zef install .
