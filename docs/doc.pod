@@ -5,21 +5,23 @@ unit class Astro::Almanac:ver<0.0.1>:auth<cpan:TBROWDER>;
 
 =head1 NAME
 
-Astro::Almanac - Provides daily data on the paths of the Sun, Moon, and planets for a specific location on the Earth
+C<Astro::Almanac> - Provides data on the paths of the Sun, Moon, and planetsth
 
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
 
 use Astro::Almanac;
+use DateTime::Location;
+
 my $loc = DateTime::Location.new: :$name, :$lat, :$lon, :$timezone;
-my $astro = Astro::Almanac.new;
+my $a   = Astro::Almanac.new;
 
 # generate one month of daily information in a single JSON file
-$astro.generate :$loc, :2021year, :1month;
+$a.generate :$loc, :2021year, :1month;
 
-# for the entire year:
-$astro.generate :$loc, :2021year;
+# same for the entire year:
+$a.generate :$loc, :2021year;
 
 =end code
 
@@ -44,6 +46,6 @@ Tom Browder <tom.browder@cpan.org>
 
 Copyright 2020 Tom Browder
 
-This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+This library is free software; you may redistribute it or modify it under the Artistic License 2.0.
 
 =end pod

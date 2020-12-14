@@ -3,21 +3,23 @@
 NAME
 ====
 
-Astro::Almanac - Provides daily data on the paths of the Sun, Moon, and planets for a specific location on the Earth
+`Astro::Almanac` - Provides data on the paths of the Sun, Moon, and planetsth
 
 SYNOPSIS
 ========
 
 ```raku
 use Astro::Almanac;
+use DateTime::Location;
+
 my $loc = DateTime::Location.new: :$name, :$lat, :$lon, :$timezone;
-my $astro = Astro::Almanac.new;
+my $a   = Astro::Almanac.new;
 
 # generate one month of daily information in a single JSON file
-$astro.generate :$loc, :2021year, :1month;
+$a.generate :$loc, :2021year, :1month;
 
-# for the entire year:
-$astro.generate :$loc, :2021year;
+# same for the entire year:
+$a.generate :$loc, :2021year;
 ```
 
 DESCRIPTION
@@ -41,5 +43,5 @@ COPYRIGHT AND LICENSE
 
 Copyright 2020 Tom Browder
 
-This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+This library is free software; you may redistribute it or modify it under the Artistic License 2.0.
 
