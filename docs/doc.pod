@@ -34,19 +34,26 @@ $a.generate :$loc, :2021year;
 C<Astro::Almanac> provides daily observation data on the Sun, Moon,
 and planets, all output as a JSON file named C<astro-data.json>.
 
-Under the covers it uses three fine Perl modules thanks to the
-excellent Raku module C<Inline::Perl5>. To install the Perl modules
+Under the covers it uses one fine Perl module thanks to the
+excellent Raku module C<Inline::Perl5>. To install the Perl module
 execute:
 
 =code
-# cpanm Astro::Montenbruck::RiseSet::RST
-# cpanm Astro::MoonPhase:
-# cpanm Astro::Utils
+# cpanm Astro::Montenbruck
 
 =head1 See also related modules by the same author:
 
 =item L<C<DateTime::Locations>|https://github.com/tbrowder/DateTime-Location>
 =item L<C<Calendar>|https://github.com/tbrowder/Calendar>
+
+=head1 CREDITS
+
+The author is indebted to I<Sergey Krushinsky>, the author of the
+excellent aid for amateur astronomers, the Perl module C<Astro::Montenbruck>,
+available on [CPAN](https://cpan.org). Sergey was very kind and helpful to me
+during my learning the rudiments of his module, and was always willing
+to listen to my suggestions as a novice user. His module, to me,
+is like a I<Swiss Army Knife> for astronomers.
 
 =head1 AUTHOR
 
@@ -54,7 +61,7 @@ Tom Browder <tom.browder@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-E<0x00a9> 2020 Tom Browder
+E<0x00a9> 2021 Tom Browder
 
 This library is free software; you may redistribute it or modify it
 under the Artistic License 2.0.

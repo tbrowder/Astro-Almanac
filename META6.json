@@ -10,17 +10,36 @@
     "DateTime::Location",
     "Inline::Perl5"
   ],
-  "description": "Provides daily data on the paths of the Sun, Moon, and planets for a specific location on the Earth",
+  "description": "Provides daily data on the Sun, Moon, and planets for a specific location on the Earth",
   "license": "Artistic-2.0",
   "name": "Astro::Almanac",
   "perl": "6.d",
   "provides": {
-    "Astro::Almanac": "lib/Astro/Almanac.rakumod"
+    "Astro::Almanac": "lib/Astro/Almanac.rakumod",
+    "Astro::Almanac::Utils::Lawrence": "lib/Astro/Almanac/Utils/Lawrence.rakumod"
   },
   "resources": [
   ],
   "source-url": "https://github.com/tbrowder/Astro-Almanac.git",
   "tags": [
+    "astro",
+    "astronomy",
+    "astronomical",
+    "astronautical",
+    "calendar",
+    "almanac",
+    "Solar System",
+    "Sun",
+    "Mercury",
+    "Venus",
+    "Earth",
+    "Moon",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune",
+    "Pluto"
   ],
   "test-depends": [
   ],

@@ -2,8 +2,8 @@ unit class Astro::Almanac:ver<0.0.1>:auth<cpan:TBROWDER>;
 
 =begin comment
 
-structure of the hash of astro data
------------------------------------
+possible structure of the hash of astro data
+--------------------------------------------
 
 Note the season hash will have 
 useful data only four days per year.
@@ -14,7 +14,7 @@ The exceptions are:
   information - value is a string 
   location    - value is a string 
   event       - value is a string 
-  fraction    - value is a decimal value in the range (0.00..1.00)
+  fraction    - value is a decimal value in the range [0..1]
 
 {
 information
@@ -34,6 +34,7 @@ yyyy-mm-dd : {
         set
         transit
         fraction
+        crescent-angle
     }
     sun : {
         rise
