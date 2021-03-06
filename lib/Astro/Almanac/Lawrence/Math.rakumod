@@ -1,7 +1,8 @@
-unit module Astro::Almanac::Utils::Lawrence;
+unit module Astro::Almanac::Lawrence::Math;
 
-#| Some utility functions from J. L. Lawrence's
+#| Some math functions from J. L. Lawrence's
 #| book "Celestial Calculations."
+#| Chapter 1
 
 #| See p. 7
 sub INT($x) is export {
@@ -32,6 +33,10 @@ sub infix:<MOD>($x,$y) is export {
 #| See p. 8
 sub ROUND($x) is export {
     return $x.round
+}
+
+sub SIGN($x) is export {
+    return sign $x
 }
 
 

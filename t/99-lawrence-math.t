@@ -1,7 +1,7 @@
 use Test;
-use Astro::Almanac::Utils::Lawrence :ALL;
+use Astro::Almanac::Lawrence::Math :ALL;
 
-plan 24;
+plan 26;
 
 is INT(1.5), 1;
 is INT(1.4), 1;
@@ -32,6 +32,9 @@ is ROUND(1.4), 1;
 is ROUND(1.8), 2;
 is ROUND(-1.4), -1;
 is ROUND(-1.8), -2;
+
+is SIGN(-3), -1;
+is SIGN(3), 1;
 
 
 done-testing;
