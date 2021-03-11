@@ -14,6 +14,10 @@ welcome.
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
+use Astro::Almanac::Lawrence::Math :ALL;
+use Astro::Almanac::Lawrence::TimeConversions :ALL;
+
+=end code
 
 Z<
 =begin code :lang<raku>
