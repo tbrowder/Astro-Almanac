@@ -20,7 +20,7 @@ use Astro::Almanac::Lawrence::TimeConversions :ALL;
 =end code
 
 Z<
-=begin code :lang<raku>
+#=begin code :lang<raku>
 # NOTE THE FOLLOWING IS NOT YET IMPLEMENTED
 use Astro::Almanac;
 use DateTime::Location;
@@ -34,7 +34,7 @@ $a.generate :$loc, :2021year, :1month;
 # same for the entire year:
 $a.generate :$loc, :2021year;
 
-=end code
+#=end code
 >
 
 =head1 DESCRIPTION
