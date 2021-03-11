@@ -14,23 +14,9 @@ SYNOPSIS
 ========
 
 ```raku
-Z<
-=begin code :lang<raku>
-# NOTE THE FOLLOWING IS NOT YET IMPLEMENTED
-use Astro::Almanac;
-use DateTime::Location;
-
-my $loc = DateTime::Location.new: :$name, :$lat, :$lon, :$timezone;
-my $a   = Astro::Almanac.new;
-
-# generate one month of daily information in a single JSON file
-$a.generate :$loc, :2021year, :1month;
-
-# same for the entire year:
-$a.generate :$loc, :2021year;
+use Astro::Almanac::Lawrence::Math :ALL;
+use Astro::Almanac::Lawrence::TimeConversions :ALL;
 ```
-
->
 
 DESCRIPTION
 ===========
