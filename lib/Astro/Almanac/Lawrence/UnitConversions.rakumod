@@ -58,6 +58,7 @@ multi sub dms2decimal(Str $x is copy) is export {
     die "FATAL: Unknown DMS format: $x";
 }
 
+#| See p. 18,
 multi sub decimal2dms($x) is export {
 }
 

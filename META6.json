@@ -17,6 +17,7 @@
   "provides": {
     "Astro::Almanac": "lib/Astro/Almanac.rakumod",
     "Astro::Almanac::Lawrence::Math": "lib/Astro/Almanac/Lawrence/Math.rakumod",
+    "Astro::Almanac::Lawrence::TimeConversions": "lib/Astro/Almanac/Lawrence/TimeConversions.rakumod",
     "Astro::Almanac::Lawrence::UnitConversions": "lib/Astro/Almanac/Lawrence/UnitConversions.rakumod"
   },
   "resources": [

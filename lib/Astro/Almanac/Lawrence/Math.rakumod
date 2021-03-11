@@ -10,7 +10,7 @@ sub INT($x) is export {
 }
 
 #| See p. 7
-sub FIX($x) is export(:FIX, :MATH) {
+sub FIX($x) is export {
     return $x.Int    
 }
 
@@ -27,6 +27,7 @@ sub FRAC($x) is export {
 #| See p. 7
 sub infix:<MOD>($x,$y) is export {
     # note that we want to allow Real numbers for $x
+    # so use the '%' operator
     return $x % $y;
 }
 
