@@ -3,7 +3,7 @@
 NAME
 ====
 
-`Astro::Almanac` - Provides data on the paths of the Sun, Moon, and planets
+`Astro::Almanac` - Provides data on the paths of the Sun, Moon, and planets along with some utility functions for astronomical calculations
 
 TEMPORARY DISCLAIMER
 ====================
@@ -14,6 +14,9 @@ SYNOPSIS
 ========
 
 ```raku
+Z<
+=begin code :lang<raku>
+# NOTE THE FOLLOWING IS NOT YET IMPLEMENTED
 use Astro::Almanac;
 use DateTime::Location;
 
@@ -27,12 +30,14 @@ $a.generate :$loc, :2021year, :1month;
 $a.generate :$loc, :2021year;
 ```
 
+>
+
 DESCRIPTION
 ===========
 
 `Astro::Almanac` provides daily observation data on the Sun, Moon, and planets, all output as a JSON file named `astro-data.json`.
 
-Under the covers it uses one fine Perl module thanks to the excellent Raku module `Inline::Perl5`. To install the Perl module execute:
+Under the covers it uses pieces of one fine Perl module thanks to the excellent Raku module `Inline::Perl5`. To install the Perl module execute:
 
     # cpanm Astro::Montenbruck
 
@@ -40,6 +45,8 @@ See also related modules by the same author:
 ============================================
 
   * [`DateTime::Locations`](https://github.com/tbrowder/DateTime-Location)
+
+  * [`DateTime::Julian`](https://github.com/tbrowder/DateTime-Julian)
 
   * [`Calendar`](https://github.com/tbrowder/Calendar)
 
