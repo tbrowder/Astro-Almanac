@@ -2,8 +2,10 @@
 
 =head1 NAME
 
-C<Astro::Almanac> - Provides data on the paths of the Sun, Moon, and
-planets along with some utility functions for astronomical calculations
+B<Astro::Almanac> - Provides data on the paths of the Sun, Moon, and
+planets for a given location on the Earth
+
+Requires installation of Perl module B<Astro::Montenbruck, version 1.24+>.
 
 =head1 TEMPORARY DISCLAIMER
 
@@ -14,9 +16,15 @@ welcome.
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
-use Astro::Almanac::Lawrence::Math :ALL;
-use Astro::Almanac::Lawrence::TimeConversions :ALL;
+use Astro::Almanac;
+my $lat =  32.4;  # 32.4 degrees north latitude
+my $lon = -86.2;  # 86.2 degrees west longitude
+my $a   = Astro::Almanac.new: :$lat, $lon;
+# generate one month (Feb) of daily information in a single JSON file
+$a.generate :2022year, :2month, :out(2022-02.json);
 
+# same for the entire year:
+$a.generate :2022year, :out(2022.json);
 =end code
 
 Z<
@@ -40,14 +48,13 @@ $a.generate :$loc, :2021year;
 =head1 DESCRIPTION
 
 C<Astro::Almanac> provides daily observation data on the Sun, Moon,
-and planets, all output as a JSON file named C<astro-data.json>.
+and planets, all output as a JSON file named C<astro-data-YYYY.json>
+(default name, but user-selectable).
 
 Under the covers it uses pieces of one fine Perl module thanks to the
 excellent Raku module C<Inline::Perl5>. To install the Perl module
-execute:
-
-=code
-# cpanm Astro::Montenbruck
+execute, as root: C<cpanm Astro::Montenbruck>. Be sure the version
+is at least 1.24.
 
 =head1 See also related modules by the same author:
 
@@ -58,7 +65,7 @@ execute:
 =head1 CREDITS
 
 The author is indebted to I<Sergey Krushinsky>, the author of the
-excellent aid for amateur astronomers, the Perl module C<Astro::Montenbruck>,
+excellent aid for amateur astronomers, the Perl module B<Astro::Montenbruck>,
 available on [CPAN](https://cpan.org). Sergey was very kind and helpful to me
 during my learning the rudiments of his module, and was always willing
 to listen to my suggestions as a novice user. His module, to me,
