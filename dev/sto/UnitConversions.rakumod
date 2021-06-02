@@ -7,13 +7,13 @@ use Astro::Almanac::Lawrence::Math :ALL;
 #| Chapter 2
 
 # Astronautical unit (p. 15)
-constant AU is export = 149_597_870_700; # meters
+constant AU      is export = 149_597_870_700; # meters
 constant deg2rad is export = pi/180;
 constant rad2deg is export = 180/pi;
 
 # Decimal format conversions (p. 15)
 # 
-# HMS format for time:  xHyMzS (hour, minute, seconds)
+# HMS format for time:   xHyMzS (hour, minute, seconds)
 # DMS format for angles: xDyMzS (degrees, minutes, seconds)
 
 # DMS conversion to decimal for angles will also work for time
@@ -64,11 +64,11 @@ multi sub decimal2dms($x) is export {
 
 
 #| See p. 
-
 sub angle2time($degrees) is export {
     return $degrees / 15;
 }
 
+#| See p. 
 sub time2angle($hours) is export {
     return $hours * 15;
 }
