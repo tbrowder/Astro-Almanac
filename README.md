@@ -7,6 +7,8 @@ NAME
 
 Requires installation of Perl module **Astro::Montenbruck, version 1.24+**.
 
+**WARNING: THIS IS CURRENTLY NON-FUNCTIONAL FOR NORMAL USE BUT IS NEARING COMPLETION**
+
 SYNOPSIS
 ========
 
