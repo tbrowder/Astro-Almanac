@@ -7,8 +7,8 @@
   ],
   "depends": [
     "Text::Utils",
-    "DateTime::Location",
-    "Inline::Perl5"
+    "File::Temp",
+    "DateTime::Location"
   ],
   "description": "Provides daily data on the Sun, Moon, and planets for a specific location on the Earth",
   "license": "Artistic-2.0",
