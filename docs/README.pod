@@ -11,8 +11,8 @@ Requires installation of Perl module B<Astro::Montenbruck, version 1.24+>.
 
 =begin code :lang<raku>
 use Astro::Almanac;
-my $lat =  32.4;  # 32.4 degrees north latitude
-my $lon = -86.2;  # 86.2 degrees west longitude
+my $lat = 32.4;  # 32.4 degrees north latitude
+my $lon = 86.2;  # 86.2 degrees west longitude
 my $a   = Astro::Almanac.new: :$lat, $lon;
 # generate one month (Feb) of daily information in a single JSON file
 my $file = '2022-02.json';
@@ -32,8 +32,8 @@ Earth surface location at sea level), on the Sun, Moon,
 and planets, all output as a JSON file named C<astro-data-YYYY.json>
 (default name, but user-selectable).
 
-Under the covers it uses pieces of one fine Perl module thanks to the
-excellent Raku module C<Inline::Perl5>. To install the Perl module
+Under the covers it uses several scripts from an excellent Perl module.
+To install the Perl module
 execute, as root: C<cpanm Astro::Montenbruck>. Be sure the version
 is at least 1.24.
 
@@ -47,7 +47,7 @@ is at least 1.24.
 =head1 CREDITS
 
 The author is indebted to I<Sergey Krushinsky>, the author of the
-excellent aid for amateur astronomers, the Perl module B<Astro::Montenbruck>,
+wonderful aid for amateur astronomers, the Perl module B<Astro::Montenbruck>,
 available on [CPAN](https://cpan.org). Sergey was very kind and helpful to me
 during my learning the rudiments of his module, and was always willing
 to listen to my suggestions as a novice user. His module, to me,
