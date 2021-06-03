@@ -1,0 +1,23 @@
+Ensure version 1.24+ of Perl module Astro::Montenbruck is installed on the system
+
+Download and unzip the distribution in a temporary place
+
+Copy the module files
+
+     ./script/phases.pl 
+     ./script/planpos.pl 
+     ./script/rst_almanac.pl 
+     ./script/solequ.pl 
+
+to local dir './bin'.
+
+Use Raku's 'run' or 'shell' to do required work.
+
+General scheme is to do a calendar year for all four Perl scripts. The hooker is
+the 'phases.pl' and 'planpos.pl' scripts need to be run one day at a time, in
+that order. The 'planpos.pl' script can be run only after the 'phases.pl'
+is run and the the output analyzed to get the Moon times of rise, set, and
+transit.
+
+Note we use the horizontal or "alt-az" coordinate system (number 6 in 'planpos.pl')
+for the positions of the Moon.

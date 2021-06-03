@@ -7,12 +7,6 @@ planets for a given location on the Earth
 
 Requires installation of Perl module B<Astro::Montenbruck, version 1.24+>.
 
-=head1 TEMPORARY DISCLAIMER
-
-C<Astro::Almanac> is a Work in Progress (WIP). Please file an issue if
-there are any features you want added. Bug reports (issues) are always
-welcome.
-
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
@@ -21,33 +15,20 @@ my $lat =  32.4;  # 32.4 degrees north latitude
 my $lon = -86.2;  # 86.2 degrees west longitude
 my $a   = Astro::Almanac.new: :$lat, $lon;
 # generate one month (Feb) of daily information in a single JSON file
-$a.generate :2022year, :2month, :out(2022-02.json);
+my $file = '2022-02.json';
+$a.generate :2022year, :2month, :$file;
+# OUTPUT: «See output file '2022-02.json'␤»
 
 # same for the entire year:
-$a.generate :2022year, :out(2022.json);
+$file = '2022.json';
+$a.generate :2022year, :$file;
+# OUTPUT: «See output file '2022.json'␤»
 =end code
-
-Z<
-#=begin code :lang<raku>
-# NOTE THE FOLLOWING IS NOT YET IMPLEMENTED
-use Astro::Almanac;
-use DateTime::Location;
-
-my $loc = DateTime::Location.new: :$name, :$lat, :$lon, :$timezone;
-my $a   = Astro::Almanac.new;
-
-# generate one month of daily information in a single JSON file
-$a.generate :$loc, :2021year, :1month;
-
-# same for the entire year:
-$a.generate :$loc, :2021year;
-
-#=end code
->
 
 =head1 DESCRIPTION
 
-C<Astro::Almanac> provides daily observation data on the Sun, Moon,
+C<Astro::Almanac> provides daily observation data (for a specific
+Earth surface location at sea level), on the Sun, Moon,
 and planets, all output as a JSON file named C<astro-data-YYYY.json>
 (default name, but user-selectable).
 
@@ -61,6 +42,7 @@ is at least 1.24.
 =item L<C<DateTime::Locations>|https://github.com/tbrowder/DateTime-Location>
 =item L<C<DateTime::Julian>|https://github.com/tbrowder/DateTime-Julian>
 =item L<C<Calendar>|https://github.com/tbrowder/Calendar>
+=item L<C<CalendarConverter>|https://github.com/tbrowder/CalendarConverter>
 
 =head1 CREDITS
 
@@ -73,11 +55,11 @@ is like a I<Swiss Army Knife> for astronomers.
 
 =head1 AUTHOR
 
-Tom Browder <tom.browder@cpan.org>
+Tom Browder (tbrowder@cpan.org)
 
-=head1 COPYRIGHT AND LICENSE
+=head1 COPYRIGHT and LICENSE
 
-E<0x00a9> 2021 Tom Browder
+Copyright E<0x00a9> 2021 Tom Browder
 
 This library is free software; you may redistribute it or modify it
 under the Artistic License 2.0.

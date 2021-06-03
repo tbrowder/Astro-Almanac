@@ -1,0 +1,8 @@
+Year          :  2022
+Time Zone     :  UTC
+
+March equinox     :  2022-03-20 15:33:25
+June solstice     :  2022-06-21 09:13:52
+September equinox :  2022-09-23 01:03:27
+December solstice :  2022-12-21 21:47:49
+
