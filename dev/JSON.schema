@@ -1,0 +1,94 @@
+=begin comment
+
+possible structure of the hash of astro data
+--------------------------------------------
+
+Note the season hash will have 
+useful data only four days per year.
+
+The value of most k/v pairs is UTC (hhmmZ); user can adjust for local time (hhmmL - adjusted for DST).
+The exceptions are:
+
+  information - value is a string 
+  location    - value is a string 
+  event       - value is a string 
+  fraction    - value is a decimal value in the range [0..1]
+
+{
+information
+location
+yyyy-mm-dd : { 
+    season : {
+        event
+        time
+    }
+    <per planet> : {
+        rise : {
+            time
+            az
+            el
+        }
+        set : {
+            time
+            az
+            el
+        }
+        transit : {
+            time
+            az
+            el
+        }
+    }
+    moon : {
+        rise : {
+            time
+            az
+            el
+            fraction
+            crescent-angle
+        }
+        set : {
+            time
+            az
+            el
+            fraction
+            crescent-angle
+        }
+        transit : {
+            time
+            az
+            el
+            fraction
+            crescent-angle
+        }
+        quarter : {
+            name
+            time
+        }
+
+    }
+    sun : {
+        rise : {
+            time
+            az
+            el
+        }
+        set : {
+            time
+            az
+            el
+        }
+        transit : {
+            time
+            az
+            el
+        }
+        twilight : {
+            astronomical
+            civil
+            nautical
+        }
+    }
+}
+
+=end comment
