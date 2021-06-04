@@ -8,6 +8,7 @@
   "depends": [
     "Text::Utils",
     "File::Temp",
+    "JSON::Fast",
     "DateTime::Location"
   ],
   "description": "Provides daily data on the Sun, Moon, and planets for a specific location on the Earth",
