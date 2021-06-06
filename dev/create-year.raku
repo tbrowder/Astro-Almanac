@@ -111,10 +111,10 @@ Date      :  2021-06-05 CDT
 Place     :  51N28, 000W00
 Time Zone :  America/Chicago
 
-        rise       transit    set     
-Moon    21:00:19   03:21:51   09:57:38   
+        rise       transit    set
+Moon    21:00:19   03:21:51   09:57:38
 ...
-Pluto   17:56:25   22:00:08   01:59:52   
+Pluto   17:56:25   22:00:08   01:59:52
 
 Twilight: civil
 Dawn   :  21:59:40
@@ -185,7 +185,7 @@ Dusk   :  --------
             %hash{$date}{$planet}<set><time>     = "{$set}Z";
         }
     }
-}
+} # sub riseset_mod2hash
 
 sub phases2hash(:$year!, :%hash!, :$ifil!, :$force, :$debug) {
     =begin comment
@@ -201,7 +201,7 @@ New Moon      :  2022-01-02 18:36:04
 
     my @lines = $ifil.IO.lines;
 
-}
+} # sub phases2hash
 
 sub solstices2hash(:$year!, :%hash!, :$ifil!, :$force, :$debug) {
     =begin comment
@@ -222,84 +222,7 @@ December solstice :  2022-12-21 21:47:49
     my $tz = @lines.shift;
     die "FATAL: Unexpected second line '$tz'" if $tz.words[3] ne "UTC";
 
-}
-
-sub rst-almanac2hash(:$year!, :%hash!, :$ifil!, :$force, :$debug) {
-    =begin comment
-30N22, 086W28
-Time Zone: UTC
-
-2022-01-01
-Moon         rise: 11:34, transit: 16:42, set: 21:50
-...
-Pluto        rise: 13:47, transit: 18:53, set: 23:58
-    =end comment
-
-    my @lines = $ifil.IO.lines;
-    my $loc = @lines.shift;
-    if $loc !~~ /[N|S] .+ [E|W] / {
-        die "FATAL: Unexpected first line '$loc'";
-    }
-    my $tz = @lines.shift;
-    die "FATAL: Unexpected second line '$tz'" if $tz.words[2] ne "UTC";
-
-    my $date;
-    for @lines -> $line is copy {
-        next if $line !~~ /\S/;
-        # remove commas from the line
-        $line ~~ s:g/','//;
-        my @w = $line.words;
-        my $w = @w.shift;
-
-        if $w ~~ /\d**4 '-' \d**2 '-' \d**2/ {
-            $date = $w;
-        }
-        else {
-            #                0     1     2        3    4     5
-            # Mars         rise: 10:42 transit: 15:49 set: 20:55
-            my $planet  = $w;
-            my $rise    = @w[1];
-            my $transit = @w[3];
-            my $set     = @w[5];
-            # set the data in the hash
-            %hash{$date}{$planet}<rise><time>    = "{$rise}Z";
-            %hash{$date}{$planet}<transit><time> = "{$transit}Z";
-            %hash{$date}{$planet}<set><time>     = "{$set}Z";
-        }
-    }
-}
-
-=begin comment
-sub gen-rst-txt(:$year!, :$ofil!, :$force, :$debug,
-                :$date,  # one day of data
-                :$month, # one month of data for month N
-               ) {
-    # normally do a whole year's worth with one call
-    if $ofil.IO.f {
-        if $force { unlink $ofil; }
-        else {
-            say "File $ofil exists.";
-            return;
-        }
-    }
-
-    my ($days, $d0);
-    if $date {
-        $days = 1;
-        shell "perl $rst --place=$loc --start=$date --timezone=UTC --days=$days > $ofil";
-    }
-    elsif $month {
-        $d0 = Date.new(:$year, :$month);
-        $days = $d0.days-in-month;
-        shell "perl $rst --place=$loc --start=$year-01-01 --timezone=UTC --days=$days > $ofil";
-    }
-    else {
-        $d0 = Date.new(:$year);
-        $days = $d0.is-leap-year ?? 366 !! 365;
-        shell "perl $rst --place=$loc --start=$year-01-01 --timezone=UTC --days=$days > $ofil";
-    }
-}
-=end comment
+} # sub solstices2hash
 
 sub gen-sol-txt(:$year!, :$ofil!, :$force, :$debug) {
     # do a whole year's worth with one call
@@ -312,7 +235,7 @@ sub gen-sol-txt(:$year!, :$ofil!, :$force, :$debug) {
     }
 
     shell "perl $sol --no-colors --year=$year --timezone=UTC > $ofil";
-}
+} # sub gen-sol-txt
 
 sub gen-ris-txt(:$year!, :$ofil!, :$force, :$debug,
                 :$date,  # one day of data
@@ -364,7 +287,7 @@ sub gen-ris-txt(:$year!, :$ofil!, :$force, :$debug,
         # get the next day
         $d = $d.later(:1day);
     }
-}
+} # sub gen-ris-txt
 
 sub gen-pha-txt(:$year!, :$ofil!, :$force, :$debug,
                 :$date,  # one day of data
@@ -402,7 +325,7 @@ sub gen-pha-txt(:$year!, :$ofil!, :$force, :$debug,
     else {
         $d1 = Date.new(:$year, :12month, :31day);
     }
-    
+
 
     # iterate over the days in the selected year
     my $d = $d0;
@@ -416,7 +339,7 @@ sub gen-pha-txt(:$year!, :$ofil!, :$force, :$debug,
         # get the next day
         $d = $d.later(:1day);
     }
-}
+} # sub gen-pha-txt
 
 sub gen-pos-txt(:$year!, :%hash!, :$ofil!, :$force, :$debug,
                 :$date,  # one day of data
@@ -437,4 +360,84 @@ sub gen-pos-txt(:$year!, :%hash!, :$ofil!, :$force, :$debug,
     elsif $month {
         return;
     }
+} # sub gen-pos-txt
+
+
+###########################################################################
+=finish
+###########################################################################
+
+sub gen-rst-txt(:$year!, :$ofil!, :$force, :$debug,
+                :$date,  # one day of data
+                :$month, # one month of data for month N
+               ) {
+    # normally do a whole year's worth with one call
+    if $ofil.IO.f {
+        if $force { unlink $ofil; }
+        else {
+            say "File $ofil exists.";
+            return;
+        }
+    }
+
+    my ($days, $d0);
+    if $date {
+        $days = 1;
+        shell "perl $rst --place=$loc --start=$date --timezone=UTC --days=$days > $ofil";
+    }
+    elsif $month {
+        $d0 = Date.new(:$year, :$month);
+        $days = $d0.days-in-month;
+        shell "perl $rst --place=$loc --start=$year-01-01 --timezone=UTC --days=$days > $ofil";
+    }
+    else {
+        $d0 = Date.new(:$year);
+        $days = $d0.is-leap-year ?? 366 !! 365;
+        shell "perl $rst --place=$loc --start=$year-01-01 --timezone=UTC --days=$days > $ofil";
+    }
 }
+
+sub rst-almanac2hash(:$year!, :%hash!, :$ifil!, :$force, :$debug) {
+    =begin comment
+30N22, 086W28
+Time Zone: UTC
+
+2022-01-01
+Moon         rise: 11:34, transit: 16:42, set: 21:50
+...
+Pluto        rise: 13:47, transit: 18:53, set: 23:58
+    =end comment
+
+    my @lines = $ifil.IO.lines;
+    my $loc = @lines.shift;
+    if $loc !~~ /[N|S] .+ [E|W] / {
+        die "FATAL: Unexpected first line '$loc'";
+    }
+    my $tz = @lines.shift;
+    die "FATAL: Unexpected second line '$tz'" if $tz.words[2] ne "UTC";
+
+    my $date;
+    for @lines -> $line is copy {
+        next if $line !~~ /\S/;
+        # remove commas from the line
+        $line ~~ s:g/','//;
+        my @w = $line.words;
+        my $w = @w.shift;
+
+        if $w ~~ /\d**4 '-' \d**2 '-' \d**2/ {
+            $date = $w;
+        }
+        else {
+            #                0     1     2        3    4     5
+            # Mars         rise: 10:42 transit: 15:49 set: 20:55
+            my $planet  = $w;
+            my $rise    = @w[1];
+            my $transit = @w[3];
+            my $set     = @w[5];
+            # set the data in the hash
+            %hash{$date}{$planet}<rise><time>    = "{$rise}Z";
+            %hash{$date}{$planet}<transit><time> = "{$transit}Z";
+            %hash{$date}{$planet}<set><time>     = "{$set}Z";
+        }
+    }
+} # sub rst-almanac2hash
