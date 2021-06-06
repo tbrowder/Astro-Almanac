@@ -6,8 +6,14 @@ Copy the module files
 
      ./script/phases.pl 
      ./script/planpos.pl 
+     ./script/riseset.pl 
      ./script/rst_almanac.pl 
      ./script/solequ.pl 
+
+Modify riseset.pl to calculate all three twilights
+and call the new file:
+
+     ./script/riseset_mod.pl 
 
 to local dir './bin'.
 
