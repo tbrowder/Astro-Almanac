@@ -6,7 +6,6 @@ my $dir  = "./bin";
 my $pha  = "$dir/phases.pl";
 my $pos  = "$dir/planpos.pl";
 my $ris  = "$dir/riseset_mod.pl";
-#my $rst  = "$dir/rst_almanac.pl";
 my $sol  = "$dir/solequ.pl";
 
 # these data are for testing one month's worth of data
@@ -37,7 +36,6 @@ my $force = 0;
 
 for @*ARGS {
     when /:i ^h/ {
-        #shell("perl $rst --help > RST.help").so;
         shell("perl $sol --help > SOL.help").so;
         shell("perl $pos --help > POS.help").so;
         shell("perl $pha --help > PHA.help").so;
@@ -76,7 +74,6 @@ if 0 {
 # get the raw data
 my $solfil = "{$year}-sol.txt";
 my $phafil = "{$year}-pha.txt";
-#my $rstfil = "{$year}-rst.txt";
 my $posfil = "{$year}-pos.txt";
 my $risfil = "{$year}-ris.txt";
 
@@ -91,7 +88,7 @@ phases2hash :$year, :%hash, :ifil($phafil), :$force, :$debug;
 solstices2hash :$year, :%hash, :ifil($solfil), :$force, :$debug;
 
 # the positions need the hash of rise/set event times
-gen-pos-txt :$year, :%hash, :$month, :$date, :ofil($posfil), :$force, :$debug;
+positions2hash :%hash, :$debug;
 
 # calculate Moon position and fraction of illumination
 # data from previously collected data
@@ -341,27 +338,58 @@ sub gen-pha-txt(:$year!, :$ofil!, :$force, :$debug,
     }
 } # sub gen-pha-txt
 
-sub gen-pos-txt(:$year!, :%hash!, :$ofil!, :$force, :$debug,
-                :$date,  # one day of data
-                :$month, # one month of data for month N
-               ) {
-    # normally do a whole year's worth with one call
-    if $ofil.IO.f {
-        if $force { unlink $ofil; }
-        else {
-            say "File $ofil exists.";
-            return;
+class PlanetPos {
+    has $.planet;
+    has $.rise-time;
+    has $.transit-time;
+    has $.set-time; 
+}
+
+sub positions2hash(:%hash!, :$debug) {
+    for %hash.keys -> $k {
+        next if $k !~~ /^\d/;
+        my %p = %($k);
+        for %p.keys -> $planet {
+            my $p = PlanetPos.new: :$planet, :rise-time(%p<rise>), :transit-time(%p<transit>), :set-time(%p<set>);
+            get-planet-position $p, :$debug;
         }
     }
+  
+} # sub positions2hash
 
-    if $date {
-        return;
-    }
-    elsif $month {
-        return;
-    }
-} # sub gen-pos-txt
+sub get-planet-position(PlanetPos $planet, # this is the planet whose data is to be extracted
+                        :$place!) {
+    # This is a brute-force use of planpos.pl to extract
+    # data for one planet, one location, and rise, transit, and set times
+    # for all desired coordinate and format types.
+    =begin comment
+    --time
+        Date and time, either a calendar entry in format "YYYY-MM-DD HH:MM
+        Z", or "YYYY-MM-DD HH:MM Z", or a floating-point Julian Day:
 
+          --time="2019-06-08 12:00 +0300"
+          --time="2019-06-08 09:00 UTC"
+          --time=2458642.875
+
+        Calendar entries should be enclosed in quotation marks. Optional "Z"
+        stands for time zone, short name or offset from UTC. "+00300" in the
+        example above means "3 hours east of Greenwich".
+
+    --coordinates: type and format of coordinates to display:
+        *   1 - Ecliptical, angular units (default)
+        *   2 - Ecliptical, zodiac
+        *   3 - Equatorial, time units
+        *   4 - Equatorial, angular units
+        *   5 - Horizontal, time units
+        *   6 - Horizontal, angular units
+
+    --format: format of numbers:
+        *   D decimal: arc-degrees or hours
+        *   S sexagesimal: degrees (hours), minutes, seconds
+    =end comment
+    #shell "perl $pos --no-colors --timezone=UTC --time=$time --place=$place --coordinates=$coord --format=$fmt > $ofil";
+
+} # sub get-planet-position
 
 ###########################################################################
 =finish
