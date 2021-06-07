@@ -15,7 +15,8 @@ B<WARNING: THIS IS CURRENTLY NON-FUNCTIONAL FOR NORMAL USE BUT IS NEARING COMPLE
 use Astro::Almanac;
 my $lat = 32.4;  # 32.4 degrees north latitude
 my $lon = 86.2;  # 86.2 degrees west longitude
-my $a   = Astro::Almanac.new: :$lat, $lon;
+my $tz  = 'CST';
+my $a   = Astro::Almanac.new: :$lat, :$lon;
 # generate one month (Feb) of daily information in a single JSON file
 my $file = '2022-02.json';
 $a.generate :2022year, :2month, :$file;
@@ -27,9 +28,11 @@ $a.generate :2022year, :$file;
 # OUTPUT: «See output file '2022.json'␤»
 =end code
 
+Note that times for events are always expressed as UTC.
+
 =head1 DESCRIPTION
 
-C<Astro::Almanac> provides daily observation data (for a specific
+B<Astro::Almanac> provides daily observation data (for a specific
 Earth surface location at sea level), on the Sun, Moon,
 and planets, all output as a JSON file named C<astro-data-YYYY.json>
 (default name, but user-selectable).
