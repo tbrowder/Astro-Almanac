@@ -88,9 +88,14 @@ sub print_position {
     my $decimal = uc $format eq 'D';
     my $scheme = $theme->scheme;
 
-    state $convert_lambda = convert_lambda($coords, $decimal);
-    state $convert_beta   = convert_beta($coords, $decimal);
-    state $format_motion  = sub {
+    #state $convert_lambda = convert_lambda($coords, $decimal);
+    #state $convert_beta   = convert_beta($coords, $decimal);
+    #state $format_motion  = sub {
+    #    dms_or_dec_str($_[0], decimal => uc $format eq 'D', places => 2, sign => 1 );
+    #};
+    my $convert_lambda = convert_lambda($coords, $decimal);
+    my $convert_beta   = convert_beta($coords, $decimal);
+    my $format_motion  = sub {
         dms_or_dec_str($_[0], decimal => uc $format eq 'D', places => 2, sign => 1 );
     };
 
@@ -152,7 +157,8 @@ my $time   = local_now()->strftime('%F %T');
 my @place;
 my $format = 'S';
 my $coords = 1;
-my $theme;
+my $theme = Astro::Montenbruck::Utils::Theme->create('colorless');;
+my $planet;
 
 # Parse options and print usage if there is a syntax error,
 # or if usage was explicitly requested.
@@ -160,6 +166,7 @@ GetOptions(
     'help|?'        => \$help,
     'man'           => \$man,
     'time:s'        => \$time,
+    'planet:s'      => \$planet,
     'place:s{2}'    => \@place,
     'dt!'           => \$use_dt,
     'format:s'      => \$format,
@@ -219,164 +226,44 @@ $theme->print_data(
 );
 print "\n";
 
-print_header($coords, $format, $theme);
-find_positions(
-    $t,
-    \@PLANETS,
-    sub { print_position(@_, $obliq, $lst, $lat, $format, $coords, $theme) },
-    with_motion => 1
-);
-print "\n";
+my @planets = ($planet);
 
 
-
-__END__
-
+# repeat this for all desired coord, format values
 =pod
 
-=encoding UTF-8
-
-=head1 NAME
-
-planpos - calculate planetary positions for given time and place.
-
-=head1 SYNOPSIS
-
-  planpos [options]
-
-=head1 OPTIONS
-
-=over 4
-
-=item B<--help>
-
-Prints a brief help message and exits.
-
-=item B<--man>
-
-Prints the manual page and exits.
-
-=item B<--time>
-
-Date and time, either a I<calendar entry> in format C<YYYY-MM-DD HH:MM Z>, or
-C<YYYY-MM-DD HH:MM Z>, or a floating-point I<Julian Day>:
-
-  --time="2019-06-08 12:00 +0300"
-  --time="2019-06-08 09:00 UTC"
-  --time=2458642.875
-
-Calendar entries should be enclosed in quotation marks. Optional B<"Z"> stands for
-time zone, short name or offset from UTC. C<"+00300"> in the example above means
-I<"3 hours east of Greenwich">.
-
-=item B<--place>
-
-The observer's location. Contains 2 elements, space separated. 
-
-=over
-
-=item * 
-
-latitude in C<DD(N|S)MM> format, B<N> for North, B<S> for South.
-
-=item *
-
-longitude in C<DDD(W|E)MM> format, B<W> for West, B<E> for East.
-
-=back
-
-E.g.: C<--place=51N28 0W0> for I<Greenwich, UK> (the default).
-
-B<Decimal numbers> are also supported. In that case
-
-=over
-
-=item * 
-
-The latitude always goes first
-
-=item * 
-
-Negative numbers represent I<South> latitude and I<East> longitudes. 
-
-=back
-
-C<--place=55.75 -37.58> for I<Moscow, Russian Federation>.
-C<--place=40.73 73.935> for I<New-York, NY, USA>.
-
-
-=item B<--coordinates>: type and format of coordinates to display:
-
-=over
-
-=item * 
-
-B<1> - Ecliptical, angular units (default)
-
-=item * 
-
-B<2> - Ecliptical, zodiac
-
-=item * 
-
-B<3> - Equatorial, time units
-
-=item * 
-
-B<4> - Equatorial, angular units
-
-=item * 
-
-B<5> - Horizontal, time units
-
-=item * 
-
-B<6> - Horizontal, angular units
-
-=back
-
-=item B<--format>: format of numbers:
-
-=over
-
-=item * 
-
-B<D> decimal: arc-degrees or hours
-
-=item * 
-
-B<S> sexagesimal: degrees (hours), minutes, seconds
-
-=back
-
-=item B<--theme>: color theme:
-
-=over
-
-=item * 
-
-B<dark> (default): for dark consoles
-
-=item * 
-
-B<light>: for light consoles
-
-=item * 
-
-B<colorless>: without colors, for terminals that do not support ANSI color codes
-
-=back
-
-=item B<--no-colors>: do not use colors, same as C<--theme=colorless>
-
-=back
-
-
-
-=head1 DESCRIPTION
-
-B<planpos> computes planetary positions for current moment or given
-time and place.
-
+        *   1 - Ecliptical, angular units (default)
+        *   2 - Ecliptical, zodiac
+        *   3 - Equatorial, time units
+        *   4 - Equatorial, angular units
+        *   5 - Horizontal, time units
+        *   6 - Horizontal, angular units
 
 =cut
+
+my @cnam = (
+    '1 - Ecliptical, angular units',
+    '2 - Ecliptical, zodiac',
+    '3 - Equatorial, time units',
+    '4 - Equatorial, angular units',
+    '5 - Horizontal, time units',
+    '6 - Horizontal, angular units',
+);
+my @fnam = (
+    'decimal format',
+    'sexagesimal format',
+);
+
+
+for my $coords (1, 3, 4, 5, 6) {
+    my $cnam = @cnam[$coords-1];
+    for my $format ('D', 'S') {
+        my $fnam = $format eq 'D' ? @fnam[0] : @fnam[1];
+        say "# $cnam, $fnam";
+        print_header($coords, $format, $theme);
+        find_positions( $t, \@planets, sub { print_position(@_, $obliq, $lst, $lat, $format, $coords, $theme) }, with_motion => 1);
+    }
+}
+
+print "\n";
+
