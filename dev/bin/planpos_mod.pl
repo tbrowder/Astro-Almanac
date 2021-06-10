@@ -157,7 +157,7 @@ my $time   = local_now()->strftime('%F %T');
 my @place;
 my $format = 'S';
 my $coords = 1;
-my $theme = Astro::Montenbruck::Utils::Theme->create('colorless');;
+my $theme = Astro::Montenbruck::Utils::Theme->create('colorless');
 my $planet;
 
 # Parse options and print usage if there is a syntax error,

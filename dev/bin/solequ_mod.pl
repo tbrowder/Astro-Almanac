@@ -28,7 +28,7 @@ my $help   = 0;
 my $man    = 0;
 my $year   = $now->year;
 my $tzone  = current_timezone(); # $now->strftime('%Z');
-my $theme;
+my $theme = Astro::Montenbruck::Utils::Theme->create('colorless');
 
 # Parse options and print usage if there is a syntax error,
 # or if usage was explicitly requested.
