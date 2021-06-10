@@ -3,14 +3,25 @@
 use JSON::Fast;
 
 my $dir  = "./bin";
-my $pha  = "$dir/phases.pl";
-my $pos  = "$dir/planpos.pl";
+my $pha  = "$dir/phases_mod.pl";
+my $pos  = "$dir/planpos_mod.pl";
 my $ris  = "$dir/riseset_mod.pl";
-my $sol  = "$dir/solequ.pl";
+my $sol  = "$dir/solequ_mod.pl";
+
+my $pha2  = "$dir/phases.pl";
+my $pos2  = "$dir/planpos.pl";
+my $ris2  = "$dir/riseset.pl";
+my $sol2  = "$dir/solequ.pl";
 
 # these data are for testing one month's worth of data
 #my $loc   = "30n23 86w28"; # Okaloosa County EMS: 30.3905;86.4646 == 30n23 86w28
 my $loc   = "30.3905 86.4646";
+
+# for testing at Greenwich to compare with output from simple_ephem.pl
+my $jd    = 2458630.5; # Standard Julian date for May 27, 2019, 00:00 UTC.
+my $loc2  = "51N28 0W0";
+
+
 my $d     = Date.new(now);
 my $year  = $d.year; #2022;
 my $ofil  = "$year.json";
@@ -36,10 +47,10 @@ my $force = 0;
 
 for @*ARGS {
     when /:i ^h/ {
-        shell("perl $sol --help > SOL.help").so;
-        shell("perl $pos --help > POS.help").so;
-        shell("perl $pha --help > PHA.help").so;
-        shell("perl $ris --help > RIS.help").so;
+        shell("perl $sol2 --help > SOL.help").so;
+        shell("perl $pos2 --help > POS.help").so;
+        shell("perl $pha2 --help > PHA.help").so;
+        shell("perl $ris2 --help > RIS.help").so;
         say "See 4 help files: xxx.help";
         exit;
     }
@@ -101,6 +112,12 @@ say "Normal end.";
 say "See output JSON file '$jfil'.";
 
 #### subroutines ####
+sub run-single-riseset() {
+} # sub run-single-riseset
+
+sub run-single-planpos() {
+} # sub run-single-planpos
+
 sub riseset_mod2hash(:$year!, :%hash!, :$ifil!, :$force, :$debug) {
     # uses output from riseset_mod.pl
     =begin comment
@@ -338,11 +355,41 @@ sub gen-pha-txt(:$year!, :$ofil!, :$force, :$debug,
     }
 } # sub gen-pha-txt
 
+class Twilight {
+    has $.type;
+    # times are UTC
+    has $.dawn;
+    has $.dusk;
+}
+
+# ecl all data
+class Ecliptical {
+    # all celestial data for a position
+}
+
+class Coord {
+    # geocentric data for a position
+    # enum types:
+    #   equ-tim-sex
+    #   hor-ang-dec
+    #   hor-ang-sex
+    has $.type;
+    has $.a is rw;
+    has $.b is rw;
+    has $.dist is rw;
+    has $.motion is rw;
+}
+
 class PlanetPos {
     has $.planet;
-    has $.rise-time;
-    has $.transit-time;
-    has $.set-time; 
+    # times are UTC
+    has $.rise-time is rw;
+    has $.transit-time is rw;
+    has $.set-time is rw; 
+    has Coord    %.rise is rw;
+    has Coord    %.transit is rw;
+    has Coord    %.set is rw;
+    has Twilight %.twilights is rw;
 }
 
 sub positions2hash(:%hash!, :$debug) {
@@ -357,10 +404,10 @@ sub positions2hash(:%hash!, :$debug) {
   
 } # sub positions2hash
 
-sub get-planet-position(PlanetPos $planet, # this is the planet whose data is to be extracted
+sub get-planet-position(PlanetPos $planet, # this is the planet whose data are to be extracted
                         :$place!) {
-    # This is a brute-force use of planpos.pl to extract
-    # data for one planet, one location, and rise, transit, and set times
+    # This is a brute-force use of planpos_mod.pl to extract
+    # data for one planet; one location; and either rise, transit, or set time
     # for all desired coordinate and format types.
     =begin comment
     --time
