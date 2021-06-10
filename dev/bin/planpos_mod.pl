@@ -158,7 +158,7 @@ my @place;
 my $format = 'S';
 my $coords = 1;
 my $theme = Astro::Montenbruck::Utils::Theme->create('colorless');
-my $planet;
+my $planet = 'Sun';
 
 # Parse options and print usage if there is a syntax error,
 # or if usage was explicitly requested.
