@@ -15,7 +15,6 @@ B<WARNING: THIS IS CURRENTLY NON-FUNCTIONAL FOR NORMAL USE BUT IS NEARING COMPLE
 use Astro::Almanac;
 my $lat = 32.4;  # 32.4 degrees north latitude
 my $lon = 86.2;  # 86.2 degrees west longitude
-my $tz  = 'CST';
 my $a   = Astro::Almanac.new: :$lat, :$lon;
 # generate one month (Feb) of daily information in a single JSON file
 my $file = '2022-02.json';

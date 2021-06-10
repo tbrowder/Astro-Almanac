@@ -7,7 +7,6 @@
   ],
   "depends": [
     "Text::Utils",
-    "Astro::Utils",
     "File::Temp",
     "JSON::Fast",
     "DateTime::Location"

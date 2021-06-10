@@ -16,7 +16,7 @@ SYNOPSIS
 use Astro::Almanac;
 my $lat = 32.4;  # 32.4 degrees north latitude
 my $lon = 86.2;  # 86.2 degrees west longitude
-my $a   = Astro::Almanac.new: :$lat, $lon;
+my $a   = Astro::Almanac.new: :$lat, :$lon;
 # generate one month (Feb) of daily information in a single JSON file
 my $file = '2022-02.json';
 $a.generate :2022year, :2month, :$file;
@@ -28,10 +28,12 @@ $a.generate :2022year, :$file;
 # OUTPUT: «See output file '2022.json'␤»
 ```
 
+Note that times for events are always expressed as UTC.
+
 DESCRIPTION
 ===========
 
-`Astro::Almanac` provides daily observation data (for a specific Earth surface location at sea level), on the Sun, Moon, and planets, all output as a JSON file named `astro-data-YYYY.json` (default name, but user-selectable).
+**Astro::Almanac** provides daily observation data (for a specific Earth surface location at sea level), on the Sun, Moon, and planets, all output as a JSON file named `astro-data-YYYY.json` (default name, but user-selectable).
 
 Under the covers it uses several scripts from an excellent Perl module. To install the Perl module execute, as root: `cpanm Astro::Montenbruck`. Be sure the version is at least 1.24.
 
