@@ -242,12 +242,12 @@ my @planets = ($planet);
 =cut
 
 my @cnam = (
-    '1 - Ecliptical, angular units',
+    '1 - Ecliptical, angular units', # *
     '2 - Ecliptical, zodiac',
-    '3 - Equatorial, time units',
-    '4 - Equatorial, angular units',
-    '5 - Horizontal, time units',
-    '6 - Horizontal, angular units',
+    '3 - Equatorial, time units',    # *
+    '4 - Equatorial, angular units', 
+    '5 - Horizontal, time units',    # *
+    '6 - Horizontal, angular units', # *
 );
 my @fnam = (
     'decimal format',
@@ -255,10 +255,24 @@ my @fnam = (
 );
 
 
-for my $coords (1, 3, 4, 5, 6) {
+COORD: for my $coords (1, 3, 5, 6) {
     my $cnam = @cnam[$coords-1];
-    for my $format ('D', 'S') {
+    FORMAT: for my $format ('D', 'S') {
         my $fnam = $format eq 'D' ? @fnam[0] : @fnam[1];
+        # skip some combos
+        if (($coords == 3) && ($format eq 'D')) {
+            #say "# skipping $cnam, $fnam";
+            next FORMAT; 
+        }
+        elsif (($coords == 5) && ($format eq 'S')) {
+            #say "# skipping $cnam, $fnam";
+            next FORMAT; 
+        }
+        elsif (($coords == 6) && ($format eq 'D')) {
+            #say "# skipping $cnam, $fnam";
+            next FORMAT; 
+        }
+
         say "# $cnam, $fnam";
         print_header($coords, $format, $theme);
         find_positions( $t, \@planets, sub { print_position(@_, $obliq, $lst, $lat, $format, $coords, $theme) }, with_motion => 1);
