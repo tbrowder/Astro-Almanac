@@ -41,13 +41,17 @@ To install the Perl module
 execute, as root: C<cpanm Astro::Montenbruck>. Be sure the version
 is at least 1.24.
 
-=head1 See also related modules by the same author:
+=head2 See also related modules by the same author:
 
 =item L<C<DateTime::Locations>|https://github.com/tbrowder/DateTime-Location>
 =item L<C<DateTime::Julian>|https://github.com/tbrowder/DateTime-Julian>
 =item L<C<Calendar>|https://github.com/tbrowder/Calendar>
 =item L<C<CalendarConverter>|https://github.com/tbrowder/CalendarConverter>
 
+=head1 JSON output format for one day
+
+=begin code
+=end code
 =head1 CREDITS
 
 The author is indebted to I<Sergey Krushinsky>, the author of the

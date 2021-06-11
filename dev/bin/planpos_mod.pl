@@ -158,7 +158,7 @@ my @place;
 my $format = 'S';
 my $coords = 1;
 my $theme = Astro::Montenbruck::Utils::Theme->create('colorless');
-my $planet = 'Sun';
+my $planet = 'Moon';
 
 # Parse options and print usage if there is a syntax error,
 # or if usage was explicitly requested.
@@ -249,16 +249,31 @@ my @cnam = (
     '5 - Horizontal, time units',    # *
     '6 - Horizontal, angular units', # *
 );
+my @cnam2 = (
+    'ecl-ang', # *
+    'ecl-zod',
+    'equ-tim', # *
+    'equ-ang', 
+    'hor-tim', # *
+    'hor-ang', # *
+);
 my @fnam = (
     'decimal format',
     'sexagesimal format',
 );
+my @fnam2 = (
+    '-dec',
+    '-sex',
+);
 
 
 COORD: for my $coords (1, 3, 5, 6) {
-    my $cnam = @cnam[$coords-1];
+    my $cnam  = @cnam[$coords-1];
+    my $cnam2 = @cnam2[$coords-1];
     FORMAT: for my $format ('D', 'S') {
-        my $fnam = $format eq 'D' ? @fnam[0] : @fnam[1];
+        my $fnam  = $format eq 'D' ? @fnam[0] : @fnam[1];
+        my $fnam2 = $format eq 'D' ? @fnam2[0] : @fnam2[1];
+        my $typ = $cnam2 . $fnam2;
         # skip some combos
         if (($coords == 3) && ($format eq 'D')) {
             #say "# skipping $cnam, $fnam";
@@ -273,7 +288,7 @@ COORD: for my $coords (1, 3, 5, 6) {
             next FORMAT; 
         }
 
-        say "# $cnam, $fnam";
+        say "# type: $typ";
         print_header($coords, $format, $theme);
         find_positions( $t, \@planets, sub { print_position(@_, $obliq, $lst, $lat, $format, $coords, $theme) }, with_motion => 1);
     }
