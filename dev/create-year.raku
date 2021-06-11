@@ -27,7 +27,7 @@ my $year  = $d.year; #2022;
 my $ofil  = "$year.json";
 
 my $month;
-my $date;
+my $date = Date.new(now).Str;
 
 if not @*ARGS.elems {
     print qq:to/HERE/;
@@ -88,18 +88,22 @@ my $phafil = "{$year}-pha.txt";
 my $posfil = "{$year}-pos.txt";
 my $risfil = "{$year}-ris.txt";
 
+# these three subs create text files from Perl progs that must thenlp
+# be converted into hash components
 gen-ris-txt :$year, :$month, :$date, :ofil($risfil), :$force, :$debug;
 gen-sol-txt :$year, :ofil($solfil), :$force, :$debug;
 gen-pha-txt :$year, :$month, :$date, :ofil($phafil), :$force, :$debug;
 
 # convert to a hash
 my %hash;
+%hash<location>    = $loc;
+%hash<information> = "EMS, Okaloosa County, Florida, US";
 riseset_mod2hash :$year, :%hash, :ifil($risfil), :$force, :$debug;
 phases2hash :$year, :%hash, :ifil($phafil), :$force, :$debug;
 solstices2hash :$year, :%hash, :ifil($solfil), :$force, :$debug;
 
 # the positions need the hash of rise/set event times
-positions2hash :%hash, :$debug;
+#positions2hash :%hash, :$debug;
 
 # calculate Moon position and fraction of illumination
 # data from previously collected data
@@ -107,6 +111,14 @@ positions2hash :%hash, :$debug;
 # save the hash as JSON
 my $jstr = to-json %hash;
 my $jfil = "{$year}.json";
+if $ofil.IO.f {
+    if $force { unlink $ofil; }
+    else {
+        say "File $ofil exists.";
+        return;
+    }
+}
+
 spurt $jfil, $jstr;
 say "Normal end.";
 say "See output JSON file '$jfil'.";
@@ -214,7 +226,40 @@ New Moon      :  2022-01-02 18:36:04
     =end comment
 
     my @lines = $ifil.IO.lines;
+    my $Y = @lines.shift;
+    my $tz = @lines.shift;
+    die "FATAL: Unexpected second line '$tz'" if $tz.words[3] ne "UTC";
 
+    for @lines -> $line {
+        next if $line !~~ /\S/;
+        my @w = $line.words;
+        my $ph     = @w[0];
+        my $ph2    = @w[1];
+        my $date   = @w[3];
+        my $time   = "{@w[4]}Z";
+        
+        my $frac;
+        my $phase = "$ph $ph2";
+        if $ph eq 'New' {
+            $frac = 0.0;
+        }
+        elsif $ph eq 'First' {
+            $frac = 0.5;
+        }
+        elsif $ph eq 'Full' {
+            $frac = 1.0;
+        }
+        elsif $ph eq 'Last' {
+            $frac = 0.5;
+        }
+        else {
+            die "FATAL: Unexpected Moon phase '$ph'";
+        }
+
+        # fill the hash
+        %hash{$date}<Moon><phase>{$phase}<frac> = $frac;
+        %hash{$date}<Moon><phase>{$phase}<time> = $time;
+    }
 } # sub phases2hash
 
 sub solstices2hash(:$year!, :%hash!, :$ifil!, :$force, :$debug) {
@@ -236,6 +281,17 @@ December solstice :  2022-12-21 21:47:49
     my $tz = @lines.shift;
     die "FATAL: Unexpected second line '$tz'" if $tz.words[3] ne "UTC";
 
+    for @lines -> $line {
+        next if $line !~~ /\S/;
+        my @w = $line.words;
+        my $month = @w[0];
+        my $type  = @w[1];
+        my $colon = @w[2];
+        my $date  = @w[3];
+        my $time  = @w[4];
+        # fill the hash
+        %hash{$date}{$type}{$month} = "{$time}Z";
+    }
 } # sub solstices2hash
 
 sub gen-sol-txt(:$year!, :$ofil!, :$force, :$debug) {
@@ -405,7 +461,10 @@ sub positions2hash(:%hash!, :$debug) {
 } # sub positions2hash
 
 sub get-planet-position(PlanetPos $planet, # this is the planet whose data are to be extracted
-                        :$place!) {
+                        :$date!,
+                        :$time!,
+                        :$place!,
+                       ) {
     # This is a brute-force use of planpos_mod.pl to extract
     # data for one planet; one location; and either rise, transit, or set time
     # for all desired coordinate and format types.
@@ -434,7 +493,32 @@ sub get-planet-position(PlanetPos $planet, # this is the planet whose data are t
         *   D decimal: arc-degrees or hours
         *   S sexagesimal: degrees (hours), minutes, seconds
     =end comment
-    #shell "perl $pos --no-colors --timezone=UTC --time=$time --place=$place --coordinates=$coord --format=$fmt > $ofil";
+    =begin comment
+Local Time          :  2021-06-11 14:00:00 floating
+Universal Time      :  2021-06-11 14:00:00
+Julian Day          :  2459377.08333333349
+Delta-T             :  95.31s.
+Place               :  37N00, 087W00
+Sidereal Time       :  01:32:31
+Ecliptic Obliquity  : +23:26:11
+
+# type: ecl-ang-dec
+planet    lambda     beta     dist       motion    
+Sun       080.87°   +00.00°   01.0154   +00.96°
+# type: ecl-ang-sex
+planet    lambda        beta        dist       motion    
+Sun       080:51:56   +00:00:03   01.0154   +00:57:21
+# type: equ-tim-sex
+planet    alpha       delta       dist       motion    
+Sun       05:20:14   +23:07:21   01.0154   +00:57:21
+# type: hor-tim-dec
+planet    azim     alt      dist       motion    
+Sun       05.94   +39.58°   01.0154   +00.96°
+# type: hor-ang-sex
+planet    azim          alt         dist       motion    
+Sun       089:08:16   +39:34:43   01.0154   +00:57:21
+    =end comment
+    #shell "perl $pos --no-colors --time=$time --place=$place --coordinates=$coord --format=$fmt > $ofil";
 
 } # sub get-planet-position
 
