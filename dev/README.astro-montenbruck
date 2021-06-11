@@ -25,5 +25,3 @@ that order. The 'planpos.pl' script can be run only after the 'phases.pl'
 is run and the the output analyzed to get the Moon times of rise, set, and
 transit.
 
-Note we use the horizontal or "alt-az" coordinate system (number 6 in 'planpos.pl')
-for the positions of the Moon.

@@ -70,7 +70,12 @@ for @*ARGS {
         $month = +$0;
     }
     when /:i ^t/ {
-        $date = Date.new(now);
+        $date = Date.new(now).Str;
+    }
+    when /^ (\d) $/ {
+        # produce a test for achieving same output as simple_ephem.pl
+        # with Raku code
+        $month = +$0;
     }
 
 }
@@ -259,6 +264,9 @@ New Moon      :  2022-01-02 18:36:04
         # fill the hash
         %hash{$date}<Moon><phase>{$phase}<frac> = $frac;
         %hash{$date}<Moon><phase>{$phase}<time> = $time;
+        # try a DateTime object to ease calculations
+        my $dt = DateTime.new: "{$date}T{$time}";
+        %hash{$date}<Moon><phase>{$phase}<DateTime> = $dt;
     }
 } # sub phases2hash
 
