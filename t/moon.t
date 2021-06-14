@@ -14,5 +14,12 @@ my a-s = 20.6579;  # Sun
 my d-s = 8.6964;
 my R   = 149_971_520; # km
 
+=begin comment
+is-approx $psi, 110.7929, "psi, degrees";
+is-approx $i, 69.0756, "phase angle, degrees";
+is-approx $k, 0.6775, "fraction of illumination";
+=end comment
+
+
 is 1,1;
 
