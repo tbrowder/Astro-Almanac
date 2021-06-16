@@ -531,16 +531,6 @@ Sun       089:08:16   +39:34:43   01.0154   +00:57:21
 
 } # sub get-planet-position
 
-sub crescent-angle(:$sun-az!, :$sun-el!, :$moon-az!, :$moon-el!) {
-    # should work for both hemispheres
-    # input angles are in decimal degrees
-    my $delta-az = $sun-az - $moon-az;
-    my $y   = sin(deg2rad($delta-az)) * cos(deg2rad($sun-el));
-    my $x   = cos(deg2rad($moon-el)) * sin(deg2rad($moon-el));
-    my $ca  = atan2($x,$y);
-    $ca     = rad2deg($ca);
-}
-
 sub get-phase-name($i, # the phase increment index
                    $f, # the fraction of illumination
                   ) {

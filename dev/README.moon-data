@@ -23,38 +23,38 @@ and 90 degrees.
 Azimuth is the angle of the object around the horizon, usually
 messured from true north eastward.
 
-From Jean Meeus' book "Astronomical Algorithms" 
-Chapter 48 
-"Illuminated Fraction of the Moon's Disk" 
+From Jean Meeus' book "Astronomical Algorithms"
+Chapter 48
+"Illuminated Fraction of the Moon's Disk"
 p. 345
 ================================================================
 
-k = (1 + cos i) / 2; # Eq. 48.1
+k = (1 + cos iota) / 2; # Eq. 48.1
 
   where:
 
-  k - illuminated fraction of the Moon
-  i - phase angle
+  k    - illuminated fraction of the Moon
+  iota - phase angle
 
-cos psi = sin d-s sin d-m + cos d-s cos d-m cos(a-s - a-m); # Eq. 48.2
+cos psi = sin decl-sun sin decl-moon + cos decl-sun cos decl-moon cos(rha-sun - rha-moon); # Eq. 48.2
 
   where:
 
-  psi - geocentric elongation of the Moon from the Sun
-  a-s - right ascension of the Sun
-  d-s - declinaion of the Sun
-  a-m - right ascension of the Moon
-  d-m - declinaion of the Moon
+  psi       - geocentric elongation of the Moon from the Sun
+  rha-sun   - right ascension of the Sun
+  decl-sun  - declination of the Sun
+  rha-moon  - right ascension of the Moon
+  decl-moom - declinaion of the Moon
 
-tan i = (R sin psi) / (D - R cos psi); # Eq. 48.3
+tan iota = (R sin psi) / (D - R cos psi); # Eq. 48.3
 
   where:
 
   R - distance Earth to Sun
   D - distance Earth to Moon (same units as R)
 
-  The angles psi and i are always between 0 and 180 degrees.
-  Once i is known, the illuminated fraction, k, can be
+  The angles psi and iota are always between 0 and 180 degrees.
+  Once iota is known, the illuminated fraction, k, can be
   obtained from Eq. 48.1.
 
 Position Angle of the Moon's bright limb
@@ -65,24 +65,52 @@ figure on page 345), measured from the North Point of the disk
 (not from the axis of rotation of the lunar globe). It can be
 obtained from:
 
-tan chi = [cos d-s sin(a-s - a-m)] 
+tan chi = [cos d-s sin(a-s - a-m)]
              / [sin d-s cos d-m - cos d-s sin d-m cos(a-s - a-m)]; # Eq. 48.5
 
-The angle chi is in the vicinity of 270 degrees near First Quarter, near
-90 degrees after Full Moon. It can be found in the correct quadrant by
-applying the atan2 function to the numerator and denominator of the
-fraction in Eq. 48.5 (see "the correct quadrant" in Chapter 1).
+The angle chi is in the vicinity of 270 degrees near First Quarter,
+near 90 degrees after Full Moon. It can be found in the correct
+quadrant by applying the atan2 function to the numerator and
+denominator of the fraction in Eq. 48.5 (see "the correct quadrant" in
+Chapter 1).
 
 If chi is the position angle of the midpoint of the bright limb, then
-the position angle of the cusps are chi-90 and chi+90 degrees.
-The angle chi has the avantage that it ambiguously defines the illuminated
+the position angle of the cusps are chi-90 and chi+90 degrees.  The
+angle chi has the avantage that it ambiguously defines the illuminated
 limb of the Moon.
 
-Note that the angle chi is not measured from the direction of the 
+Note that the angle chi is not measured from the direction of the
 observer's zenith. The zenith angle of the bright limb is chi - q
 where q is the parallactic angle (see Chapter 14).
 
 Finally, note that Eq. 48.5 is valid in the case of a planet, too.
+
+Parallactic angle (Chapter 14)
+------------------------------
+
+By convention, the angle q is negative before, and positive after the
+passage through the southern meridian. Exactly on the meridian we have
+q = 0 degrees.
+
+tan q = sind(H) / (tand(phi) * cosd(delta) - sind(delta) *  cosd(H)); # Eq. 14.1
+
+  where:
+
+  phi - geographical latitude of the observer
+  delta - declination of the celestial body
+  H     - the body's hour angle at the given instant
+
+Exactly in the zenith, the angle q is not defined. That is the
+condition of the observer being at the North Pole.
+
+When a celestial body passes through the zenith, the patallactic angle
+q suddenly jumps from -90 degrees to +90 degrees.
+
+If the celestial body is on the horizon (hence rising or setting),
+formula (14.1) simplifies greatly, namely
+
+cosd(q) = sind(phi) / cosd(delta); # unnumbered equation
+
 
 ================================================================
 Definitions (from Wikipedia):
@@ -98,21 +126,22 @@ the direction of positive declination.
 
 north celestial pole (NCP) - The north and south celestial poles
 are the two imaginary points in the sky where the Earth's axis of
-rotation, indefinitely extended,  appear permanently directly overhead 
+rotation, indefinitely extended,  appear permanently directly overhead
 to observers at the Earth's North Pole and South Pole, respectively.
 As the Earth spins on its axis, the two celestial poles remain
 fixed in the sky, and all other celestial points appear to rotate
 around them, completing one circuit per day (strictly, per sidereal day).
 
-parallactic angle - In spherical astronomy, the parallactic angle is the 
-angle between the great circle through a celestial object and the zenith, 
+parallactic angle - In spherical astronomy, the parallactic angle is the
+angle between the great circle through a celestial object and the zenith,
 and the hour circle of the object. It is usually denoted q. In the
 triangle zenith-object-celestial pole, the parallactic angle will be
 the position angle of the zenith at the celestial object. Despite its
 name, this angle is unrelated with parallax. The parallactic angle is
 zero or 180 degrees when the object crosses the meridian.
 
-hour circle -
+hour circle - the great circle through the object and the celestial poles
+
 
 ================================================================
 sub get-phase-name($i, # the phase increment index
