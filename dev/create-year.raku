@@ -15,8 +15,9 @@ my $ris2  = "$dir/riseset.pl";
 my $sol2  = "$dir/solequ.pl";
 
 # these data are for testing one month's worth of data
-#my $loc   = "30n23 86w28"; # Okaloosa County EMS: 30.3905;86.4646 == 30n23 86w28
-my $loc   = "30.3905 86.4646";
+# lat/lon +north/+east
+#my $loc   = "30n23 86w28"; # Okaloosa County EMS: 30.3905;-86.4646 == 30n23 86w28
+my $loc   = "30.3905 -86.4646";
 
 # for testing at Greenwich to compare with output from simple_ephem.pl
 my $jd    = 2458630.5; # Standard Julian date for May 27, 2019, 00:00 UTC.
