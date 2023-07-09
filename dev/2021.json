@@ -1,0 +1,199 @@
+{
+  "2021-03-20": {
+    "equinox": {
+      "March": "09:37:38Z"
+    }
+  },
+  "2021-06-24": {
+    "Moon": {
+      "phase": {
+        "Full Moon": {
+          "frac": 1.0,
+          "time": "18:41:39Z",
+          "DateTime": "2021-06-24T18:41:39Z"
+        }
+      }
+    }
+  },
+  "location": "30.3905 86.4646",
+  "2021-07-10": {
+    "Moon": {
+      "phase": {
+        "New Moon": {
+          "DateTime": "2021-07-10T01:16:54Z",
+          "frac": 0.0,
+          "time": "01:16:54Z"
+        }
+      }
+    }
+  },
+  "2021-06-11": {
+    "Uranus": {
+      "set": {
+        "time": "21:46:26Z"
+      },
+      "transit": {
+        "time": "15:07:40Z"
+      },
+      "rise": {
+        "time": "08:28:55Z"
+      }
+    },
+    "Mercury": {
+      "transit": {
+        "time": "17:42:08Z"
+      },
+      "rise": {
+        "time": "10:52:09Z"
+      },
+      "set": {
+        "time": "00:38:38Z"
+      }
+    },
+    "twilight": {
+      "astronomical": {
+        "dusk": "02:24:14Z",
+        "dawn": "09:06:29Z"
+      },
+      "nautical": {
+        "dusk": "01:48:51Z",
+        "dawn": "09:42:27Z"
+      },
+      "civil": {
+        "dawn": "10:15:26Z",
+        "dusk": "01:15:22Z"
+      }
+    },
+    "Neptune": {
+      "set": {
+        "time": "17:55:08Z"
+      },
+      "rise": {
+        "time": "06:09:23Z"
+      },
+      "transit": {
+        "time": "12:02:15Z"
+      }
+    },
+    "Mars": {
+      "set": {
+        "time": "03:32:13Z"
+      },
+      "rise": {
+        "time": "13:39:08Z"
+      },
+      "transit": {
+        "time": "20:34:55Z"
+      }
+    },
+    "Sun": {
+      "transit": {
+        "time": "17:45:35Z"
+      },
+      "set": {
+        "time": "00:47:42Z"
+      },
+      "rise": {
+        "time": "10:43:12Z"
+      }
+    },
+    "Jupiter": {
+      "rise": {
+        "time": "05:09:13Z"
+      },
+      "transit": {
+        "time": "10:43:22Z"
+      },
+      "set": {
+        "time": "16:17:31Z"
+      }
+    },
+    "Saturn": {
+      "rise": {
+        "time": "04:10:21Z"
+      },
+      "set": {
+        "time": "14:48:56Z"
+      },
+      "transit": {
+        "time": "09:29:39Z"
+      }
+    },
+    "Pluto": {
+      "transit": {
+        "time": "08:21:00Z"
+      },
+      "set": {
+        "time": "13:27:14Z"
+      },
+      "rise": {
+        "time": "03:14:46Z"
+      }
+    },
+    "Moon": {
+      "set": {
+        "time": "01:16:17Z"
+      },
+      "rise": {
+        "time": "11:31:41Z"
+      },
+      "transit": {
+        "time": "18:50:04Z"
+      }
+    },
+    "Venus": {
+      "rise": {
+        "time": "12:09:25Z"
+      },
+      "transit": {
+        "time": "19:14:00Z"
+      },
+      "set": {
+        "time": "02:17:17Z"
+      }
+    }
+  },
+  "2021-06-18": {
+    "Moon": {
+      "phase": {
+        "First Quarter": {
+          "time": "03:54:35Z",
+          "frac": 0.5,
+          "DateTime": "2021-06-18T03:54:35Z"
+        }
+      }
+    }
+  },
+  "2021-12-21": {
+    "solstice": {
+      "December": "15:59:09Z"
+    }
+  },
+  "2021-09-22": {
+    "equinox": {
+      "September": "19:20:58Z"
+    }
+  },
+  "2021-06-10": {
+    "Moon": {
+      "phase": {
+        "Last Quarter": {
+          "frac": 0.5,
+          "DateTime": "2021-06-10T10:52:48Z",
+          "time": "10:52:48Z"
+        },
+        "New Moon": {
+          "time": "10:52:48Z",
+          "frac": 0.0,
+          "DateTime": "2021-06-10T10:52:48Z"
+        }
+      }
+    }
+  },
+  "information": "EMS, Okaloosa County, Florida, US",
+  "2021-06-21": {
+    "solstice": {
+      "June": "03:32:20Z"
+    }
+  }
+}

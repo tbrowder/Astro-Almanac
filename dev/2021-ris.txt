@@ -1,0 +1,28 @@
+Date      :  2021-06-11 UTC
+Place     :  30N23, 086W27
+Time Zone :  UTC
+
+        rise       transit    set     
+Moon    11:31:41   18:50:04   01:16:17   
+Sun     10:43:12   17:45:35   00:47:42   
+Mercury 10:52:09   17:42:08   00:38:38   
+Venus   12:09:25   19:14:00   02:17:17   
+Mars    13:39:08   20:34:55   03:32:13   
+Jupiter 05:09:13   10:43:22   16:17:31   
+Saturn  04:10:21   09:29:39   14:48:56   
+Uranus  08:28:55   15:07:40   21:46:26   
+Neptune 06:09:23   12:02:15   17:55:08   
+Pluto   03:14:46   08:21:00   13:27:14   
+
+Twilight: civil
+Dawn   :  10:15:26
+Dusk   :  01:15:22
+
+Twilight: nautical
+Dawn   :  09:42:27
+Dusk   :  01:48:51
+
+Twilight: astronomical
+Dawn   :  09:06:29
+Dusk   :  02:24:14
+
