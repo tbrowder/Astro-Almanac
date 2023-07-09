@@ -1,5 +1,6 @@
 #!/usr/bin/env raku
 
+use Math::Trig:auth<tbrowder:CPAN> :ALL;
 use JSON::Fast;
 
 my $dir  = "./bin";
@@ -14,8 +15,9 @@ my $ris2  = "$dir/riseset.pl";
 my $sol2  = "$dir/solequ.pl";
 
 # these data are for testing one month's worth of data
-#my $loc   = "30n23 86w28"; # Okaloosa County EMS: 30.3905;86.4646 == 30n23 86w28
-my $loc   = "30.3905 86.4646";
+# lat/lon +north/+east
+#my $loc   = "30n23 86w28"; # Okaloosa County EMS: 30.3905;-86.4646 == 30n23 86w28
+my $loc   = "30.3905 -86.4646";
 
 # for testing at Greenwich to compare with output from simple_ephem.pl
 my $jd    = 2458630.5; # Standard Julian date for May 27, 2019, 00:00 UTC.
@@ -530,6 +532,33 @@ Sun       089:08:16   +39:34:43   01.0154   +00:57:21
 
 } # sub get-planet-position
 
+sub get-phase-name($i, # the phase increment index
+                   $f, # the fraction of illumination
+                  ) {
+    # the phases are minimally divided into five increments ($i: 0..4)
+    # within each increment we calculate a title as appropriate
+    if $i < 3 {
+        # new moon waxing to full illumination
+        given $f {
+            when $f ==   0 { "new moon" }
+            when $f <   50 { "waxing crescent" }
+            when $f ==  50 { "first quarter" }
+            when $f <  100 { "waxing gibbous" }
+            when $f == 100 { "full moon" }
+            default { die "FATAL: Unexpected fractional illumination factor: $f"; }
+        }
+    }
+    else {
+        # full moon waning to total darkness
+        given $f {
+            when $f ==   0 { "new moon" }
+            when $f <   50 { "waxing crescent" }
+            when $f ==  50 { "third quarter" }
+            when $f <  100 { "waning gibbous" }
+            default { die "FATAL: Unexpected fractional illumination factor: $f"; }
+        }
+    }
+}
 ###########################################################################
 =finish
 ###########################################################################
